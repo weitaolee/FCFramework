@@ -38,6 +38,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>FC.Framework.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -56,7 +62,7 @@
     <Compile Include="Command\AbstractCommandExecutor.cs" />
     <Compile Include="Command\CommandExecutorContainer.cs" />
     <Compile Include="Command\DefaultCommandBus.cs" />
-    <Compile Include="Command\ExecuteAsyncAttribute.cs" />
+    <Compile Include="Command\ExecuteAttribute.cs" />
     <Compile Include="Command\FCFrameworkCommandBusExtension.cs" />
     <Compile Include="Command\ICommand.cs" />
     <Compile Include="Command\ICommandBus.cs" />
@@ -127,6 +133,7 @@
     <Compile Include="Utilities\CryptoHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="FC.Framework.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
