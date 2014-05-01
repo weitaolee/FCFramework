@@ -37,9 +37,9 @@ namespace FC.Framework.RabbitMQ
         {
             Check.Argument.IsNotNull(cmd, "cmd");
 
-            var unneedDistribute = cmd.GetType().IsDefined(typeof(ExecuteSyncAttribute), false);
+            var needDistribute = cmd.GetType().IsDefined(typeof(ExecuteDistributedAttribute), false);
 
-            if (!unneedDistribute)
+            if (needDistribute)
             {
                 this.SendDistributed(cmd);
             }

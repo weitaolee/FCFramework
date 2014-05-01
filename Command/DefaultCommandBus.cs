@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FC.Framework.Utilities;
 using FC.Framework.Domain;
+using System.Threading.Tasks;
 
 namespace FC.Framework
 {
@@ -29,18 +30,35 @@ namespace FC.Framework
 
             try
             {
-                using (IUnitOfWork unitOfWork = UnitOfWork.Begin())
+
+                var executorType = this._executorContainer.FindExecutorType<TCommand>();
+                if (executorType == null)
+                    throw new UnknowExecption("Faile to find " + typeof(TCommand).Name + "'s executor type.");
+
+                var executor = this._executorActivator.CreateInstance(executorType) as ICommandExecutor<TCommand>;
+                if (executor == null)
+                    throw new UnknowExecption("Faile to create instance of " + typeof(TCommand).Name + "'s executor.");
+
+                var needAsync = cmd.GetType().IsDefined(typeof(ExecuteAsyncAttribute), false);
+
+                if (needAsync)
                 {
-                    var executorType = this._executorContainer.FindExecutorType<TCommand>();
-                    if (executorType == null)
-                        throw new UnknowExecption("Faile to find " + typeof(TCommand).Name + "'s executor type.");
-
-                    var executor = this._executorActivator.CreateInstance(executorType) as ICommandExecutor<TCommand>;
-                    if (executor == null)
-                        throw new UnknowExecption("Faile to create instance of " + typeof(TCommand).Name + "'s executor.");
-
-                    executor.Execute(cmd);
-                    unitOfWork.Commit();
+                    Task.Factory.StartNew(() =>
+                    {
+                        using (IUnitOfWork unitOfWork = UnitOfWork.Begin())
+                        {
+                            executor.Execute(cmd);
+                            unitOfWork.Commit();
+                        }
+                    }).ContinueWith((t) => { Log.Exception(t.Exception); });
+                }
+                else
+                {
+                    using (IUnitOfWork unitOfWork = UnitOfWork.Begin())
+                    {
+                        executor.Execute(cmd);
+                        unitOfWork.Commit();
+                    }
                 }
             }
             catch (IoCException)
@@ -56,5 +74,7 @@ namespace FC.Framework
                 throw new UnknowExecption("Faile to execute " + typeof(TCommand).Name + ",see the inner exception for detail.", ex);
             }
         }
+
+
     }
 }

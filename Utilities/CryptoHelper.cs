@@ -54,12 +54,12 @@ namespace FC.Framework.Utilities
         {
             Check.Argument.IsNotEmpty(targetStr, "targetStr");
 
-            MD5 md5cng = MD5Cng.Create();
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
 
-            byte[] targetBytes = Encoding.Unicode.GetBytes(targetStr);
-            var md5bytes = md5cng.ComputeHash(targetBytes);
+            byte[] targetBytes = Encoding.UTF8.GetBytes(targetStr);
+            var md5bytes = md5.ComputeHash(targetBytes);
 
-            string result = Encoding.Unicode.GetString(md5bytes);
+            string result = BitConverter.ToString(md5bytes).Replace("-",string.Empty);
 
             return result;
         }

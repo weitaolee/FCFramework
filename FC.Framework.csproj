@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\EnumDescriptionAttribute.cs" />
     <Compile Include="Command\AbstractCommandExecutor.cs" />
     <Compile Include="Command\CommandExecutorContainer.cs" />
     <Compile Include="Command\DefaultCommandBus.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Domain\IEntity.cs" />
     <Compile Include="Domain\DomainException.cs" />
     <Compile Include="Event\ExecuteStrategy\OnEventRaisedAttribute.cs" />
+    <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Domain\IValueObject.cs" />
     <Compile Include="Event\Bus\FCFrameworkEventBusExtension.cs" />
