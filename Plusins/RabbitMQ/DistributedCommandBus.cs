@@ -61,7 +61,7 @@ namespace FC.Framework.RabbitMQ
                 if (_channel == null)
                     _channel = this._connection.CreateModel();
 
-                var exchangeName = this._settings.MatchExchange(cmd, this._settings.CoinPairExchanges);
+                var exchangeName = this._settings.MatchExchangeFunc(cmd, this._settings.Exchanges);
                 var build = new BytesMessageBuilder(_channel);
                 var body = Encoding.UTF8.GetBytes(IoC.Resolve<IJsonSerializer>().Serialize(cmd));
                 build.WriteBytes(body);
