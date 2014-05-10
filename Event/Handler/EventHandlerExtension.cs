@@ -13,11 +13,10 @@ namespace FC.Framework
             IoC.Resolve<ICache>().Remove(cacheKey);
         }
 
-        public static void Apply(this IEventHandler eventHandler, IDomainEvent @event)
+        public static void Apply<TEvent>(this IEventHandler eventHandler, TEvent @event)
+            where TEvent : IDomainEvent
         {
             EventBus.Apply(@event);
         }
     }
-
-
 }
