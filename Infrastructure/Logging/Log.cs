@@ -37,26 +37,6 @@ namespace FC.Framework
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         [DebuggerStepThrough]
-        public static void Warning(string message)
-        {
-            Check.Argument.IsNotEmpty(message, "message");
-
-            if (InnerLogger != null)
-                InnerLogger.Warning(message);
-        }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        [DebuggerStepThrough]
-        public static void Warning(string format, params object[] args)
-        {
-            Check.Argument.IsNotEmpty(format, "format");
-
-            if (InnerLogger != null)
-                InnerLogger.Warning(Format(format, args));
-        }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        [DebuggerStepThrough]
         public static void Debug(string message)
         {
             Check.Argument.IsNotEmpty(message, "message");
@@ -74,14 +54,27 @@ namespace FC.Framework
             if (InnerLogger != null)
                 InnerLogger.Debug(Format(format, args));
         }
+
+
         [MethodImpl(MethodImplOptions.NoInlining)]
         [DebuggerStepThrough]
-        public static void Error(string message)
+        public static void Warn(string format, params object[] args)
         {
-            Check.Argument.IsNotEmpty(message, "message");
+            Check.Argument.IsNotEmpty(format, "format");
 
             if (InnerLogger != null)
-                InnerLogger.Error(message);
+                InnerLogger.Warn(Format(format, args));
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        [DebuggerStepThrough]
+        public static void Warn(string message, Exception exception)
+        {
+            Check.Argument.IsNotEmpty(message, "message");
+            Check.Argument.IsNotNull(exception, "exception");
+
+            if (InnerLogger != null)
+                InnerLogger.Warn(message, exception);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -96,12 +89,33 @@ namespace FC.Framework
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         [DebuggerStepThrough]
-        public static void Exception(Exception exception)
+        public static void Error(string message, Exception exception)
+        {
+            Check.Argument.IsNotEmpty(message, "message");
+            Check.Argument.IsNotNull(exception, "exception");
+
+            if (InnerLogger != null)
+                InnerLogger.Error(message, exception);
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        [DebuggerStepThrough]
+        public static void Fatal(string format, params object[] args)
+        {
+            Check.Argument.IsNotEmpty(format, "format");
+
+            if (InnerLogger != null)
+                InnerLogger.Fatal(Format(format));
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        [DebuggerStepThrough]
+        public static void Fatal(string message, Exception exception)
         {
             Check.Argument.IsNotNull(exception, "exception");
 
             if (InnerLogger != null)
-                InnerLogger.Exception(exception);
+                InnerLogger.Fatal(message, exception);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]

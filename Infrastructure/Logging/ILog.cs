@@ -14,10 +14,13 @@ namespace FC.Framework
 
         void Debug(string message);
 
-        void Warning(string message);
+        void Warn(string message);
+        void Warn(string message, Exception exception);
 
         void Error(string message);
+        void Error(string message, Exception exception);
 
-        void Exception(Exception exception);
+        void Fatal(string message);
+        void Fatal(string message, Exception exception);
     }
 }

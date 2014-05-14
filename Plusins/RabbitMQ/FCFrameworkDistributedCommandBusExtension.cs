@@ -24,7 +24,7 @@ namespace FC.Framework.RabbitMQ
             IoC.Register<IDomainContext, DefaultDomainContext>();
 
             IoC.Register<ICommandBus>(new DistributedCommandBus(commandExecutorContainer, exchangeSettings));
-            exchangeSettings.Watch();
+            exchangeSettings.Watch(60);
             return fcframework;
         }
     }

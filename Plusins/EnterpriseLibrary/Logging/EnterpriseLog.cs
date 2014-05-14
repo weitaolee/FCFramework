@@ -35,11 +35,18 @@
             Logger.Write(BuildEntry(message, TraceEventType.Verbose));
         }
 
-        public void Warning(string message)
+        public void Warn(string message)
         {
             Check.Argument.IsNotEmpty(message, "message");
 
             Logger.Write(BuildEntry(message, TraceEventType.Warning));
+        }
+
+        public void Warn(string message, Exception exception)
+        {
+            Check.Argument.IsNotEmpty(message, "message");
+
+            Logger.Write(BuildEntry(message + ":" + exception.Message, TraceEventType.Warning));
         }
 
         public void Error(string message)
@@ -49,15 +56,27 @@
             Logger.Write(BuildEntry(message, TraceEventType.Error));
         }
 
-        public void Exception(Exception exception)
+        public void Error(string message, Exception exception)
         {
-            Logger.Write(BuildEntry(exception.Message, TraceEventType.Critical));
+            Check.Argument.IsNotEmpty(message, "message");
+
+            Logger.Write(BuildEntry(message + ":" + exception.Message, TraceEventType.Error)); throw new NotImplementedException();
+        }
+
+
+        public void Fatal(string message)
+        {
+            Logger.Write(BuildEntry(message, TraceEventType.Critical));
+        }
+
+        public void Fatal(string message, Exception exception)
+        {
+            Logger.Write(BuildEntry(message + ":" + exception.Message, TraceEventType.Critical));
         }
 
         private LogEntry BuildEntry(string message, TraceEventType traceEventType)
         {
             return new LogEntry(message, traceEventType.ToString(), 1, 0, traceEventType, null, null);
         }
-         
     }
 }

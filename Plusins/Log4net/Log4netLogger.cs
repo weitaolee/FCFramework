@@ -16,7 +16,7 @@ namespace FC.Framework.Log4net
         private readonly log4net.ILog _logger;
 
         #region ctor
-        public Log4netLogger(string configFile="log4net.config")
+        public Log4netLogger(string configFile = "log4net.config")
         {
             var file = new FileInfo(configFile);
             if (!file.Exists)
@@ -47,9 +47,14 @@ namespace FC.Framework.Log4net
             this._logger.Debug(message);
         }
 
-        public void Warning(string message)
+        public void Warn(string message)
         {
-            this._logger.Debug(message);
+            this._logger.Warn(message);
+        }
+
+        public void Warn(string message, Exception exception)
+        {
+            this._logger.Warn(message, exception);
         }
 
         public void Error(string message)
@@ -57,9 +62,19 @@ namespace FC.Framework.Log4net
             this._logger.Error(message);
         }
 
-        public void Exception(Exception exception)
+        public void Error(string message, Exception exception)
         {
-            this._logger.Fatal(exception);
+            this._logger.Error(message, exception);
+        }
+
+        public void Fatal(string message, Exception exception)
+        {
+            this._logger.Fatal(message, exception);
+        }       
+
+        public void Fatal(string message)
+        {
+            this._logger.Fatal(message);
         }
     }
 }

@@ -50,7 +50,7 @@ namespace FC.Framework
                             executor.Execute(cmd);
                             unitOfWork.Commit();
                         }
-                    }).ContinueWith((t) => { Log.Exception(t.Exception); }, TaskContinuationOptions.OnlyOnFaulted);
+                    }).ContinueWith((t) => { Log.Fatal("执行异步command时出错", t.Exception); }, TaskContinuationOptions.OnlyOnFaulted);
                 }
                 else
                 {

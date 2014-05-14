@@ -14,7 +14,7 @@ namespace FC.Framework.RabbitMQ
         string RabbitConnectionString { get; }
         Func<ICommand, Dictionary<string, int>, string> MatchExchangeFunc { get; }
 
-        void Watch();
+        void Watch(int secondsFetch);
         void WatchStop();
     }
 }
