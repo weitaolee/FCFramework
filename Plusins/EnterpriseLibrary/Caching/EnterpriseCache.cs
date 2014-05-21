@@ -48,14 +48,14 @@
 
         }
 
-        public T Get<T>(string key) where T : class
+        public T Get<T>(string key) 
         {
             Check.Argument.IsNotEmpty(key, "key");
 
             return (T)_manager.GetData(key);
         }
 
-        public bool TryGet<T>(string key, out T value) where T : class
+        public bool TryGet<T>(string key, out T value) 
         {
             Check.Argument.IsNotEmpty(key, "key");
 

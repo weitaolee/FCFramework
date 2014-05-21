@@ -29,7 +29,7 @@ namespace FC.Framework
         /// <typeparam name="T">缓存数据类型</typeparam>
         /// <param name="key">缓存数据key</param>
         /// <returns></returns>
-        T Get<T>(string key) where T : class;
+        T Get<T>(string key);
         /// <summary>
         /// 试着获取指定类型、特定key的缓存数据
         /// </summary>
@@ -37,7 +37,7 @@ namespace FC.Framework
         /// <param name="key">缓存数据key</param>
         /// <param name="value">获取到的缓存数据</param>
         /// <returns>如果获取成功返回true,否则false</returns>
-        bool TryGet<T>(string key, out T value) where T : class;
+        bool TryGet<T>(string key, out T value) ;
 
         /// <summary>
         /// 添加数据到缓存中

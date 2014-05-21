@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FC.Framework.Domain;
 using FC.Framework.Repository;
-using System.Data.Entity;
 using FC.Framework.Utilities;
 
 namespace FC.Framework.EntityFramework

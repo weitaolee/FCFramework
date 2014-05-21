@@ -21,6 +21,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FC.Framework.EnterpriseLibr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FC.Framework.CouchCache.UnitTest", "Plusins\UnitTest\FC.Framework.CouchCache.UnitTest\FC.Framework.CouchCache.UnitTest.csproj", "{6BAE4C90-E94B-4A42-913D-D7C77954AD27}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{A85305BE-77B1-4253-A11D-CDD3953662EE}"
+	ProjectSection(SolutionItems) = preProject
+		Library\HibernatingRhinos.Profiler.Appender.dll = Library\HibernatingRhinos.Profiler.Appender.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

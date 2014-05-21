@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using Couchbase;
 using Enyim.Caching.Memcached;
 using Couchbase.Extensions;
+using Newtonsoft.Json;
+using Couchbase.Helpers;
+using Newtonsoft.Json.Serialization;
+using System.Reflection;
 
 namespace FC.Framework.CouchbaseCache
 {
@@ -28,19 +32,22 @@ namespace FC.Framework.CouchbaseCache
             return this._client.TryGet(key, out value);
         }
 
-        public T Get<T>(string key) where T : class
+        public T Get<T>(string key)
         {
             var returnVal = default(T);
 
             if (IsPrimitive(typeof(T)))
                 returnVal = this._client.Get<T>(key);
             else
-                returnVal = this._client.GetJson<T>(key);
+            {
+                var json = this._client.Get<string>(key);
+                return json == null || json == Null ? default(T) : DeserializeObject<T>(key, json);
+            }
 
             return returnVal;
         }
 
-        public bool TryGet<T>(string key, out T value) where T : class
+        public bool TryGet<T>(string key, out T value)
         {
             object returnVal;
             bool result = false;
@@ -48,7 +55,10 @@ namespace FC.Framework.CouchbaseCache
             if (IsPrimitive(typeof(T)))
                 returnVal = this._client.Get<T>(key);
             else
-                returnVal = this._client.GetJson<T>(key);
+            {
+                var json = this._client.Get<string>(key);
+                returnVal = json == null || json == Null ? default(T) : DeserializeObject<T>(key, json);
+            }
 
             if (returnVal != null)
             {
@@ -99,6 +109,49 @@ namespace FC.Framework.CouchbaseCache
             if (type.IsPrimitive || type == typeof(string) || type == typeof(decimal))
                 return true;
             else return false;
+        }
+
+        private static bool IsArrayOrCollection(Type type)
+        {
+            return type.GetInterface(typeof(IEnumerable<>).FullName) != null;
+        }
+
+
+        private static JsonSerializerSettings JsonSerializerSettings;
+
+        static CouchbaseCache()
+        {
+            JsonSerializerSettings = new JsonSerializerSettings
+                {
+                    ContractResolver = new DocumentIdContractResolver()
+                };
+        }
+
+        private const string Null = "null";
+
+        private static T DeserializeObject<T>(string key, string value)
+        {
+            if (!IsArrayOrCollection(typeof(T)))
+            {
+                value = DocHelper.InsertId(value, key);
+            }
+            return JsonConvert.DeserializeObject<T>(value);
+        }
+
+        private static string SerializeObject(object value)
+        {
+            var json = JsonConvert.SerializeObject(value,
+                                    Formatting.None,
+                                    JsonSerializerSettings);
+            return json;
+        }
+
+        private class DocumentIdContractResolver : CamelCasePropertyNamesContractResolver
+        {
+            protected override List<MemberInfo> GetSerializableMembers(Type objectType)
+            {
+                return base.GetSerializableMembers(objectType).Where(o => o.Name != "Id").ToList();
+            }
         }
     }
 }
