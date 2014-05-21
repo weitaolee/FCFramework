@@ -45,7 +45,7 @@ namespace FC.Framework
         /// <param name="key">缓存数据key</param>
         /// <returns></returns>
         [DebuggerStepThrough]
-        public static T Get<T>(string key) where T : class
+        public static T Get<T>(string key)
         {
             Check.Argument.IsNotEmpty(key, "key");
 
@@ -59,7 +59,7 @@ namespace FC.Framework
         /// <param name="value">获取到的缓存数据</param>
         /// <returns>如果获取成功返回true,否则false</returns>
         [DebuggerStepThrough]
-        public static bool TryGet<T>(string key, out T value) where T : class
+        public static bool TryGet<T>(string key, out T value)
         {
             Check.Argument.IsNotEmpty(key, "key");
 
