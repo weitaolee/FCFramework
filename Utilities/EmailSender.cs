@@ -120,7 +120,7 @@ namespace FC.Framework.Utilities
                 From = new MailAddress(fromAddress),
                 Subject = subject,
                 Body = body,
-                IsBodyHtml = false,
+                IsBodyHtml = true,
             };
 
             string[] tos = toAddress.Split(';');
