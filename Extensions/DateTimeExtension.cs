@@ -49,11 +49,11 @@ namespace FC.Framework
         /// <param name="target"></param>
         /// <returns></returns>
         [DebuggerStepThrough]
-        public static DateTime ConvertUnixTimestampToUtcDateTime(this int target)
+        public static DateTime ToUtcDateTime(this int target)
         {
             var time = DateTime.MinValue;
 
-            System.DateTime startTime =  new System.DateTime(1970, 1, 1).ToUniversalTime();
+            System.DateTime startTime = new System.DateTime(1970, 1, 1).ToUniversalTime();
             time = startTime.AddSeconds(target);
             return time;
         }

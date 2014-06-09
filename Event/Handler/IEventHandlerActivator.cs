@@ -26,7 +26,10 @@ namespace FC.Framework
             }
             catch (IoCException)
             {
-                IoC.Register(type, LifeStyle.Transient);
+                if (type.IsDefined(typeof(ComponentAttribute), false))
+                    IoC.Register(type, LifeStyle.Singleton);
+                else
+                    IoC.Register(type, LifeStyle.Transient);
                 return IoC.Resolve(type);
             }
         }

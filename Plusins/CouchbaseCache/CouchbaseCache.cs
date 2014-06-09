@@ -41,7 +41,7 @@ namespace FC.Framework.CouchbaseCache
             else
             {
                 var json = this._client.Get<string>(key);
-                return json == null || json == Null ? default(T) : DeserializeObject<T>(key, json);
+                returnVal = (json == null || json == Null ? default(T) : DeserializeObject<T>(key, json));
             }
 
             return returnVal;
@@ -113,7 +113,7 @@ namespace FC.Framework.CouchbaseCache
 
         private static bool IsArrayOrCollection(Type type)
         {
-            return type.GetInterface(typeof(IEnumerable<>).FullName) != null;
+            return type.GetInterface(typeof(IEnumerable<>).FullName) != null || type.Name== typeof(IEnumerable<>).Name;
         }
 
 

@@ -33,9 +33,6 @@ namespace FC.Framework.NHibernate
             IoC.Register<IDatabaseFactory, DatabaseFactory>(LifeStyle.Singleton);
 
             SessionManager.Initalize(connString.Value, mapperAssemblies, filePath);
-#if DEBUG
-            HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
-#endif
 
             return framework;
         }

@@ -76,6 +76,7 @@
     <Compile Include="Domain\IEntity.cs" />
     <Compile Include="Domain\DomainException.cs" />
     <Compile Include="Event\ExecuteStrategy\OnEventRaisedAttribute.cs" />
+    <Compile Include="Event\EventHandlerAttribute.cs" />
     <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Domain\IValueObject.cs" />

@@ -3,6 +3,8 @@ using Xunit;
 using FC.Framework;
 using FC.Framework.CouchbaseCache;
 using FC.Framework.Autofac;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FC.Framework.CouchCache.UnitTest
 {
@@ -40,6 +42,26 @@ namespace FC.Framework.CouchCache.UnitTest
 
             Assert.Equal(cacheModel, null);
         }
+
+        [Fact]
+        public void TestStoreListModel()
+        {
+            var model = new TestModel { Name = "weitaolee", Sex = "male", Age = 25 };
+            var key = Guid.NewGuid().Shrink();
+
+            var list = new List<TestModel>();
+            list.Add(model);
+
+            Cache.Add(key, list);
+
+            var cacheModelList = Cache.Get<IEnumerable<TestModel>>(key);
+
+            Assert.NotNull(cacheModelList);
+            Assert.True(cacheModelList.Count()>0);
+
+            Cache.Remove(key); 
+        }
+
 
         [Fact]
         public void TestSimpleValue()
