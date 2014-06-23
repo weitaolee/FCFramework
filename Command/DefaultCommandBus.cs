@@ -70,6 +70,10 @@ namespace FC.Framework
                 Log.Error("send command时出现domainex错误", domainex);
                 throw new CommandExecutionException(domainex.Code, domainex.Message);
             }
+            catch (CommandExecutionException ex)
+            {
+                throw ex;
+            }
             catch (SystemException ex)
             {
                 throw new UnknowExecption("Faile to execute " + typeof(TCommand).Name + ",see the inner exception for detail.", ex);

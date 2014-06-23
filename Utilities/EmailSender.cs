@@ -13,17 +13,19 @@ namespace FC.Framework.Utilities
         static bool _configed = false;
         static string _emailServer;
         static string _webmasterEmail;
-        static string _webmasterPassword;
+        static string _emailAccount;
+        static string _emailPassword;
 
-        public static void Config(string emailServer, string webMasterEmail, string webMasterPassword)
+        public static void Config(string emailServer, string webMasterEmail, string emailAccount, string emailPassword)
         {
             Check.Argument.IsNotEmpty(emailServer, "emailServer");
-            Check.Argument.IsNotEmpty(webMasterEmail, "webMasterEmail");
-            Check.Argument.IsNotEmpty(webMasterPassword, "webMasterPassword");
+            Check.Argument.IsNotEmpty(emailAccount, "emailAccount");
+            Check.Argument.IsNotEmpty(emailPassword, "emailPassword");
 
             _emailServer = emailServer;
-            _webmasterEmail = webMasterEmail;
-            _webmasterPassword = webMasterPassword;
+            _webmasterEmail = string.IsNullOrEmpty(webMasterEmail) ? emailAccount : webMasterEmail;
+            _emailAccount = emailAccount;
+            _emailPassword = emailPassword;
             _configed = true;
         }
 
@@ -49,7 +51,7 @@ namespace FC.Framework.Utilities
                     EnableSsl = false
                 };
 
-                smtp.Credentials = new NetworkCredential(_webmasterEmail, _webmasterPassword);
+                smtp.Credentials = new NetworkCredential(_emailAccount, _emailPassword);
 
                 smtp.Send(mail);
             }

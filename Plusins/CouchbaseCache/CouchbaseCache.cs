@@ -106,14 +106,14 @@ namespace FC.Framework.CouchbaseCache
         /// <returns></returns>
         private bool IsPrimitive(Type type)
         {
-            if (type.IsPrimitive || type == typeof(string) || type == typeof(decimal))
+            if (type.IsPrimitive || type == typeof(string) || type == typeof(decimal) || type == typeof(DateTime) || type == typeof(Enum))
                 return true;
             else return false;
         }
 
         private static bool IsArrayOrCollection(Type type)
         {
-            return type.GetInterface(typeof(IEnumerable<>).FullName) != null || type.Name== typeof(IEnumerable<>).Name;
+            return type.GetInterface(typeof(IEnumerable<>).FullName) != null || type.Name == typeof(IEnumerable<>).Name;
         }
 
 
