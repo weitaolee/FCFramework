@@ -8,7 +8,6 @@ namespace FC.Framework
         private static readonly DateTime MinDate = new DateTime(1970, 1, 1);
         private static readonly DateTime MaxDate = new DateTime(9999, 12, 31, 23, 59, 59, 999);
 
-        [DebuggerStepThrough]
         public static bool IsValid(this DateTime target)
         {
             return (target >= MinDate) && (target <= MaxDate);
@@ -19,13 +18,9 @@ namespace FC.Framework
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        [DebuggerStepThrough]
         public static int ToUnixTimestamp(this DateTime target)
         {
-            int intResult = 0;
-            System.DateTime startTime = TimeZone.CurrentTimeZone.ToUniversalTime(new System.DateTime(1970, 1, 1));
-            intResult = (int)(target - startTime).TotalSeconds;
-            return intResult;
+            return (int)(target - new DateTime(1970, 1, 1).ToLocalTime()).TotalSeconds;
         }
 
         /// <summary>
@@ -33,15 +28,12 @@ namespace FC.Framework
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        [DebuggerStepThrough]
         public static DateTime ToLocalDateTime(this int target)
         {
-            var time = DateTime.MinValue;
+            DateTime dtDateTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+            dtDateTime = dtDateTime.AddSeconds(target);
 
-            System.DateTime startTime = new System.DateTime(1970, 1, 1).ToUniversalTime();
-            time = startTime.AddSeconds(target);
-           
-            return time;
+            return dtDateTime.ToLocalTime();
         }
 
         /// <summary>
@@ -49,14 +41,12 @@ namespace FC.Framework
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        [DebuggerStepThrough]
         public static DateTime ToUtcDateTime(this int target)
         {
-            var time = DateTime.MinValue;
+            DateTime dtDateTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+            dtDateTime = dtDateTime.AddSeconds(target);
 
-            System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1));
-            time = startTime.AddSeconds(target);
-            return time;
+            return dtDateTime.ToUniversalTime();
         }
     }
 }
