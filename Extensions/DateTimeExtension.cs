@@ -23,7 +23,7 @@ namespace FC.Framework
         public static int ToUnixTimestamp(this DateTime target)
         {
             int intResult = 0;
-            System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1));
+            System.DateTime startTime = TimeZone.CurrentTimeZone.ToUniversalTime(new System.DateTime(1970, 1, 1));
             intResult = (int)(target - startTime).TotalSeconds;
             return intResult;
         }
@@ -38,8 +38,9 @@ namespace FC.Framework
         {
             var time = DateTime.MinValue;
 
-            System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1));
+            System.DateTime startTime = new System.DateTime(1970, 1, 1).ToUniversalTime();
             time = startTime.AddSeconds(target);
+           
             return time;
         }
 
@@ -53,7 +54,7 @@ namespace FC.Framework
         {
             var time = DateTime.MinValue;
 
-            System.DateTime startTime = new System.DateTime(1970, 1, 1).ToUniversalTime();
+            System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1));
             time = startTime.AddSeconds(target);
             return time;
         }

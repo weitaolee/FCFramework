@@ -57,9 +57,9 @@ namespace FC.Framework.CouchCache.UnitTest
             var cacheModelList = Cache.Get<IEnumerable<TestModel>>(key);
 
             Assert.NotNull(cacheModelList);
-            Assert.True(cacheModelList.Count()>0);
+            Assert.True(cacheModelList.Count() > 0);
 
-            Cache.Remove(key); 
+            Cache.Remove(key);
         }
 
 
