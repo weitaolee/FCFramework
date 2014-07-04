@@ -17,7 +17,6 @@ namespace FC.Framework
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        [DebuggerStepThrough]
         public static void Info(string message)
         {
             Check.Argument.IsNotEmpty(message, "message");
@@ -26,17 +25,17 @@ namespace FC.Framework
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        [DebuggerStepThrough]
         public static void Info(string format, params object[] args)
         {
             Check.Argument.IsNotEmpty(format, "format");
 
-            if (InnerLogger != null)
-                InnerLogger.Info(Format(format, args));
+            if (args == null || args.Length == 0)
+                InnerLogger.Info(format);
+            else if (InnerLogger != null)
+                InnerLogger.Info(Format(format,args));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        [DebuggerStepThrough]
         public static void Debug(string message)
         {
             Check.Argument.IsNotEmpty(message, "message");
@@ -46,28 +45,29 @@ namespace FC.Framework
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        [DebuggerStepThrough]
         public static void Debug(string format, params object[] args)
         {
             Check.Argument.IsNotEmpty(format, "format");
-
-            if (InnerLogger != null)
-                InnerLogger.Debug(Format(format, args));
+             
+            if (args == null || args.Length == 0)
+                InnerLogger.Debug(format);
+            else if (InnerLogger != null)
+                InnerLogger.Debug(Format(format,args));
         }
 
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        [DebuggerStepThrough]
         public static void Warn(string format, params object[] args)
         {
-            Check.Argument.IsNotEmpty(format, "format");
+            Check.Argument.IsNotEmpty(format, "format"); 
 
-            if (InnerLogger != null)
-                InnerLogger.Warn(Format(format, args));
+            if (args == null || args.Length == 0)
+                InnerLogger.Warn(format);
+            else if (InnerLogger != null)
+                InnerLogger.Warn(Format(format,args));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        [DebuggerStepThrough]
         public static void Warn(string message, Exception exception)
         {
             Check.Argument.IsNotEmpty(message, "message");
@@ -78,17 +78,17 @@ namespace FC.Framework
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        [DebuggerStepThrough]
         public static void Error(string format, params object[] args)
         {
-            Check.Argument.IsNotEmpty(format, "format");
+            Check.Argument.IsNotEmpty(format, "format"); 
 
-            if (InnerLogger != null)
-                InnerLogger.Error(Format(format, args));
+            if (args == null || args.Length == 0)
+                InnerLogger.Error(format);
+            else if (InnerLogger != null)
+                InnerLogger.Error(Format(format,args));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        [DebuggerStepThrough]
         public static void Error(string message, Exception exception)
         {
             Check.Argument.IsNotEmpty(message, "message");
@@ -99,17 +99,17 @@ namespace FC.Framework
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        [DebuggerStepThrough]
         public static void Fatal(string format, params object[] args)
         {
             Check.Argument.IsNotEmpty(format, "format");
 
-            if (InnerLogger != null)
-                InnerLogger.Fatal(Format(format));
+            if (args == null || args.Length == 0)
+                InnerLogger.Fatal(format);
+            else if (InnerLogger != null)
+                InnerLogger.Fatal(Format(format,args));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        [DebuggerStepThrough]
         public static void Fatal(string message, Exception exception)
         {
             Check.Argument.IsNotNull(exception, "exception");
