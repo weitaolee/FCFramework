@@ -20,7 +20,7 @@ namespace FC.Framework
         /// <returns></returns>
         public static int ToUnixTimestamp(this DateTime target)
         {
-            return (int)(target - new DateTime(1970, 1, 1).ToLocalTime()).TotalSeconds;
+            return (int)((target.ToUniversalTime().Ticks - 621355968000000000) / 10000000);
         }
 
         /// <summary>
@@ -30,8 +30,7 @@ namespace FC.Framework
         /// <returns></returns>
         public static DateTime ToLocalDateTime(this int target)
         {
-            DateTime dtDateTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
-            dtDateTime = dtDateTime.AddSeconds(target);
+            DateTime dtDateTime = new DateTime(621355968000000000 + (long)target * (long)10000000, DateTimeKind.Utc);
 
             return dtDateTime.ToLocalTime();
         }
@@ -43,10 +42,9 @@ namespace FC.Framework
         /// <returns></returns>
         public static DateTime ToUtcDateTime(this int target)
         {
-            DateTime dtDateTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
-            dtDateTime = dtDateTime.AddSeconds(target);
+            DateTime dtDateTime = new DateTime(621355968000000000 + (long)target * (long)10000000, DateTimeKind.Utc);
 
-            return dtDateTime.ToUniversalTime();
+            return dtDateTime;
         }
     }
 }

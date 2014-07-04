@@ -13,11 +13,9 @@ namespace FC.Framework.CouchCache.UnitTest
         public void TestUnixTimestamp()
         {
             var date = DateTime.Now;
-            int timestamp1=1403492447;
             var timestamp2= date.ToUnixTimestamp();
             var resolveLocalDate2 = timestamp2.ToLocalDateTime();
-            var resolveUTCDate2 = timestamp2.ToUtcDateTime();
-             
+            var resolveUTCDate2 = timestamp2.ToUtcDateTime(); 
             Assert.Equal(date.Date, resolveLocalDate2.Date);
             Assert.Equal(date.Hour, resolveLocalDate2.Hour);
             Assert.Equal(date.Minute, resolveLocalDate2.Minute);
