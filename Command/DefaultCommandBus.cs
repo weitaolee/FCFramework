@@ -67,8 +67,7 @@ namespace FC.Framework
             }
             catch (DomainException domainex)
             {
-                Log.Error("send command时出现domainex错误", domainex);
-                throw new CommandExecutionException(domainex.Code, domainex.Message);
+                throw new CommandExecutionException(domainex.Code, domainex.Message,domainex);
             }
             catch (CommandExecutionException ex)
             {
