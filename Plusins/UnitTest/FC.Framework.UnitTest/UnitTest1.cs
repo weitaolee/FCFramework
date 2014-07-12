@@ -23,5 +23,19 @@ namespace FC.Framework.CouchCache.UnitTest
             Assert.NotEqual(date, resolveUTCDate2);
             Assert.NotEqual(resolveLocalDate2, resolveUTCDate2);
         }
+
+        [Fact]
+        public void TestDecimalAndDoubleFixed()
+        {
+            var dc1 = 12.123456;
+            var dc2 = 12.1234465;
+
+
+            var db1 = 12.123456;
+            var db2 = 12.1234465;
+
+            Assert.Equal(dc1.ToFixed(4), dc2.ToFixed(4));
+            Assert.Equal(db1.ToFixed(4), db2.ToFixed(4));
+        }
     }
 }
