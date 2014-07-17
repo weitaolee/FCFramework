@@ -1,4 +1,5 @@
 ﻿using System;
+using RabbitMQ.Client;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,27 +17,18 @@ namespace FC.Framework.RabbitMQ
     /// </summary>
     public class DistributedCommandBus : DefaultCommandBus
     {
-        private ConnectionFactory _factory;
-        private IConnection _connection;
-        [ThreadStatic]
-        private static IModel _channel;
-        private IExchangeSettings _settings;
-        private bool _connected = false;
-        private int _retryCount = 0;
+        private static Func<string, IModel> _getMQChannelFunc;
+        private static Func<ICommand, string> _matchExchangeFunc;
         private object _connectLock = new object();
 
         #region ctor
-        public DistributedCommandBus(ICommandExecutorContainer executorContainer,
-                                     IExchangeSettings settings)
+        public DistributedCommandBus(ICommandExecutorContainer executorContainer, Func<string, IModel> getMQChannelFunc, Func<ICommand, string> matchExchangeFunc)
             : base(executorContainer)
         {
-            Check.Argument.IsNotNull(settings, "settings");
-            Check.Argument.IsNotEmpty(settings.RabbitConnectionString, "settings.RabbitConnectionString");
+            Check.Argument.IsNotNull(getMQChannelFunc, "getMQChannelFunc");
+            Check.Argument.IsNotNull(matchExchangeFunc, "matchExchangeFunc");
 
-            this._settings = settings;
-            _factory = new ConnectionFactory();
-            _factory.Uri = this._settings.RabbitConnectionString;
-            this.ConnectionToRabbitMQServer();
+            _matchExchangeFunc = matchExchangeFunc;
         }
         #endregion
 
@@ -59,93 +51,42 @@ namespace FC.Framework.RabbitMQ
 
         private void SendDistributed<TCommand>(TCommand cmd) where TCommand : ICommand
         {
+            var channelName = "distributedCommandBus";
+            var _channel = _getMQChannelFunc(channelName);
+
             try
             {
-                if (!_connected)
-                    throw new Exception("distributed command bus could not send before connect.");
-
-                if (_channel == null)
-                    _channel = this._connection.CreateModel();
-
-                var exchangeName = this._settings.MatchExchangeFunc(cmd, this._settings.Exchanges);
+                var exchangeName = _matchExchangeFunc(cmd);
                 var build = new BytesMessageBuilder(_channel);
                 var body = Encoding.UTF8.GetBytes(IoC.Resolve<IJsonSerializer>().Serialize(cmd));
                 build.WriteBytes(body);
                 ((IBasicProperties)build.GetContentHeader()).DeliveryMode = 2;
                 _channel.BasicPublish(exchangeName, "", ((IBasicProperties)build.GetContentHeader()), build.GetContentBody());
 
-                _retryCount = 0;
                 Log.Debug("rabbitmq send cmd " + cmd.ToString() + " to exchange:" + exchangeName);
             }
             catch (IoCException iocex)
             {
                 Log.Error("RabbitMQ send message error,because the ioc error:" + iocex.Message);
             }
-            catch (AlreadyClosedException ex)
+            catch (System.IO.EndOfStreamException ex)
             {
-                if (_retryCount < 3)
+                if (ex.Message.Equals("SharedQueue closed",StringComparison.OrdinalIgnoreCase))
+                try
                 {
-                    Log.Error("DistributedCommandBus发送消息时，发现消息队列服务器已关闭");
-                    Log.Info("{0}秒后，会再次重新连接消息队列服务器".FormatWith(30));
-                    Thread.Sleep(30 * 1000);
-                    _retryCount += 1;
-                    try
-                    {
-                        //断开已有连接
-                        this.DisconnectionToRabbitMQServer();
-                        //自动重连，并重试发送命令
-                        this.ConnectionToRabbitMQServer();
-                        SendDistributed(cmd);
-                    }
-                    catch { }
+                    _channel = _getMQChannelFunc(channelName);
+                    SendDistributed(cmd);
                 }
-                else
+                catch (Exception eex)
                 {
-                    Log.Fatal("消息队列服务器连接重试{0}次后仍无法连接成功，可能消息队列服务器已经挂掉，请尽快处理！", _retryCount);
+                    Log.Fatal("消息队列服务器连接重试{0}次后仍无法连接成功，可能消息队列服务器已经挂掉，请尽快处理！", eex);
                 }
-            }
-            catch (Exception ex)//如果发生异常重连rabbitMQ集群，寻找新的可用节点
-            {
-                _connected = false;
-                Log.Info("MQ reconnect-->rabbitmq send message error:" + ex.Message);
-            }
-        }
 
-        private void ConnectionToRabbitMQServer()
-        {
-            Log.Info("重新连接消息队列服务器...");
-            if (!_connected)
-            {
-                lock (_connectLock)
-                {
-                    if (!_connected)
-                    {
-                        _connection = _factory.CreateConnection();
-                        _channel = _connection.CreateModel();
-                        _connected = true;
-
-                        Log.Info("成功连接到消息队列服务器");
-                    }
-                }
-            }
-        }
-
-        private void DisconnectionToRabbitMQServer()
-        {
-            Log.Info("释放消息队列服务器连接...");
-
-            try
-            {
-                _channel.Close();
-                _connection.Close();
-                _connected = false;
             }
             catch (Exception ex)
-            {
-                Log.Warn("释放消息队列服务器连接时出现了错误", ex);
+            { 
+                Log.Info("MQ reconnect-->rabbitmq send message error:" + ex.Message);
             }
-
-            Log.Info("释放消息队列服务器连接完毕!");
         }
     }
 }

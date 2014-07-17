@@ -12,7 +12,7 @@ namespace FC.Framework.RabbitMQ
 {
     public static class FCFrameworkDistributedCommandBusExtension
     {
-        public static FCFramework UseRabbitMQCommandBus(this FCFramework fcframework, Assembly[] assemblies, IExchangeSettings exchangeSettings)
+        public static FCFramework UseRabbitMQCommandBus(this FCFramework fcframework, Assembly[] assemblies, Func<string, IModel> getMQChannelFunc, Func<ICommand, string> matchExchangeFunc)
         {
             Check.Argument.IsNotNull(assemblies, "assemblies");
 
@@ -20,11 +20,10 @@ namespace FC.Framework.RabbitMQ
 
             commandExecutorContainer.RegisterExecutors(assemblies);
 
-            IoC.Register<IExchangeSettings>(exchangeSettings);
+            //IoC.Register<IExchangeSettings>(exchangeSettings);
             IoC.Register<IDomainContext, DefaultDomainContext>();
 
-            IoC.Register<ICommandBus>(new DistributedCommandBus(commandExecutorContainer, exchangeSettings));
-            exchangeSettings.Watch(60);
+            IoC.Register<ICommandBus>(new DistributedCommandBus(commandExecutorContainer, getMQChannelFunc, matchExchangeFunc));
             return fcframework;
         }
     }
