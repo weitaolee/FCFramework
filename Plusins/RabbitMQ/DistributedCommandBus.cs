@@ -28,6 +28,7 @@ namespace FC.Framework.RabbitMQ
             Check.Argument.IsNotNull(getMQChannelFunc, "getMQChannelFunc");
             Check.Argument.IsNotNull(matchExchangeFunc, "matchExchangeFunc");
 
+            _getMQChannelFunc = getMQChannelFunc;
             _matchExchangeFunc = matchExchangeFunc;
         }
         #endregion

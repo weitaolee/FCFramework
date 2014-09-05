@@ -91,7 +91,7 @@ namespace FC.Framework.CouchbaseCache
             if (IsPrimitive(typeof(T)))
                 this._client.Store(StoreMode.Set, key, value, slidingExpiration);
             else
-                this._client.Store(StoreMode.Set, key, value, slidingExpiration);
+                this._client.StoreJson(StoreMode.Set, key, value, slidingExpiration);
         }
 
         public void Remove(string key)
