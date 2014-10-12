@@ -59,10 +59,11 @@ namespace FC.Framework
 
             foreach (var assemblyToScan in assembliesToScan)
             {
-                foreach (Type type in assemblyToScan.GetTypes())
-                {
-                    RegisterExecutor(type);
-                }
+                if (!assemblyToScan.FullName.Contains("System."))
+                    foreach (Type type in assemblyToScan.GetTypes())
+                    {
+                        RegisterExecutor(type);
+                    }
             }
 
         }
