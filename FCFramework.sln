@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FC.Framework", "FC.Framework.csproj", "{68CFBBF1-AD19-423C-BBDD-84D937E88B8E}"
 EndProject
@@ -27,6 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{A853
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FC.Framework.UnitTest", "Plusins\UnitTest\FC.Framework.UnitTest\FC.Framework.UnitTest.csproj", "{058AEF85-A0F4-4E47-BC02-41271B91D631}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FC.Framework.Memcached", "Plusins\Memcached\FC.Framework.Memcached.csproj", "{96DD9CFF-8D07-4615-BD01-E47198C967FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,6 +72,10 @@ Global
 		{058AEF85-A0F4-4E47-BC02-41271B91D631}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{058AEF85-A0F4-4E47-BC02-41271B91D631}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{058AEF85-A0F4-4E47-BC02-41271B91D631}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96DD9CFF-8D07-4615-BD01-E47198C967FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96DD9CFF-8D07-4615-BD01-E47198C967FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96DD9CFF-8D07-4615-BD01-E47198C967FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96DD9CFF-8D07-4615-BD01-E47198C967FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,5 +89,6 @@ Global
 		{7CD88469-2D27-45EA-AB80-2712AB19418F} = {3F232C00-9EC4-45AA-8959-761B1FF92380}
 		{6BAE4C90-E94B-4A42-913D-D7C77954AD27} = {3F232C00-9EC4-45AA-8959-761B1FF92380}
 		{058AEF85-A0F4-4E47-BC02-41271B91D631} = {3F232C00-9EC4-45AA-8959-761B1FF92380}
+		{96DD9CFF-8D07-4615-BD01-E47198C967FC} = {3F232C00-9EC4-45AA-8959-761B1FF92380}
 	EndGlobalSection
 EndGlobal
