@@ -28,8 +28,8 @@ namespace FC.Framework.Memcached
             {
                 memConfig.Authentication.Type = typeof(PlainTextAuthenticator);
                 memConfig.Authentication.Parameters["zone"] = zone;
-                memConfig.Authentication.Parameters["userName"] = "username";
-                memConfig.Authentication.Parameters["password"] = "password";
+                memConfig.Authentication.Parameters["userName"] = ocsUser;
+                memConfig.Authentication.Parameters["password"] = ocsPassword;
             }
             memConfig.SocketPool.MinPoolSize = 5;
             memConfig.SocketPool.MaxPoolSize = 200;
@@ -47,7 +47,7 @@ namespace FC.Framework.Memcached
             try
             {
                 value = this._memClient.Get<object>(key);
-                result = true;
+                result = value != null;
             }
             catch (Exception ex)
             {
@@ -68,7 +68,7 @@ namespace FC.Framework.Memcached
             try
             {
                 value = this._memClient.Get<T>(key);
-                result = true;
+                result = value != null;
             }
             catch (Exception ex)
             {
