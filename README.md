@@ -1,4 +1,4 @@
 FCFramework
 ===========
 
-FullCoin Framework
+A DDD-EDA Framework
