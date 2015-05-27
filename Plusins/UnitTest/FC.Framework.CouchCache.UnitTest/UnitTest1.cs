@@ -26,7 +26,7 @@ namespace FC.Framework.CouchCache.UnitTest
             var model = new TestModel { Name = "weitaolee", Sex = "male", Age = 25 };
             var key = Guid.NewGuid().Shrink();
 
-            Cache.Add<TestModel>(key, model);
+            Cache.Add<TestModel>(key, model, TimeSpan.FromMinutes(1));
 
             var cacheModel = Cache.Get<TestModel>(key);
 
@@ -52,7 +52,7 @@ namespace FC.Framework.CouchCache.UnitTest
             var list = new List<TestModel>();
             list.Add(model);
 
-            Cache.Add(key, list);
+            Cache.Add(key, list, DateTime.Now.AddMinutes(1));
 
             var cacheModelList = Cache.Get<IEnumerable<TestModel>>(key);
 
@@ -68,7 +68,7 @@ namespace FC.Framework.CouchCache.UnitTest
         {
             var key = Guid.NewGuid().Shrink();
 
-            Cache.Add<int>(key, 2);
+            Cache.Add<int>(key, 2, DateTime.Now.AddMinutes(1));
 
             var cacheModel = Convert.ToInt32(Cache.Get(key));
 

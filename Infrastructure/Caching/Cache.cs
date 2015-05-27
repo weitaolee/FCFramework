@@ -14,9 +14,9 @@ namespace FC.Framework
         }
 
         /// <summary>
-        /// 获得指定类型、特定key的缓存数据
+        /// get cache data
         /// </summary>
-        /// <param name="key">缓存数据key</param>
+        /// <param name="key">cache data's key</param>
         /// <returns></returns>
         [DebuggerStepThrough]
         public static object Get(string key)
@@ -26,11 +26,11 @@ namespace FC.Framework
             return _internalCache.Get(key);
         }
         /// <summary>
-        /// 试着获取指定类型、特定key的缓存数据
+        /// try get cache data
         /// </summary>
-        /// <param name="key">缓存数据key</param>
-        /// <param name="value">获取到的缓存数据</param>
-        /// <returns>如果获取成功返回true,否则false</returns>
+        /// <param name="key">cache data's key</param>
+        /// <param name="value">cache data</param>
+        /// <returns></returns>
         [DebuggerStepThrough]
         public static bool TryGet(string key, out object value)
         {
@@ -39,10 +39,10 @@ namespace FC.Framework
             return _internalCache.TryGet(key, out value);
         }
         /// <summary>
-        /// 获得指定类型、特定key的缓存数据
+        ///  get cache data
         /// </summary>
-        /// <typeparam name="T">缓存数据类型</typeparam>
-        /// <param name="key">缓存数据key</param>
+        /// <typeparam name="T">cache data's type</typeparam>
+        /// <param name="key">cache data's key</param>
         /// <returns></returns>
         [DebuggerStepThrough]
         public static T Get<T>(string key)
@@ -52,11 +52,11 @@ namespace FC.Framework
             return _internalCache.Get<T>(key);
         }
         /// <summary>
-        /// 试着获取指定类型、特定key的缓存数据
+        /// try get cache data
         /// </summary>
-        /// <typeparam name="T">缓存数据类型</typeparam>
-        /// <param name="key">缓存数据key</param>
-        /// <param name="value">获取到的缓存数据</param>
+        /// <typeparam name="T">cache data's type</typeparam>
+        /// <param name="key">cache data's key</param>
+        /// <param name="value">获取到的cache data</param>
         /// <returns>如果获取成功返回true,否则false</returns>
         [DebuggerStepThrough]
         public static bool TryGet<T>(string key, out T value)
@@ -67,23 +67,11 @@ namespace FC.Framework
         }
 
         /// <summary>
-        /// 添加数据到缓存中
+        /// add data to cache
         /// </summary>
-        /// <param name="key">缓存数据key</param>
-        /// <param name="value">缓存数据</param>
-        [DebuggerStepThrough]
-        public static void Add<T>(string key, T value)
-        {
-            Check.Argument.IsNotEmpty(key, "key");
-
-            _internalCache.Add(key, value);
-        }
-        /// <summary>
-        /// 添加数据到缓存中
-        /// </summary>
-        /// <param name="key">缓存数据key</param>
-        /// <param name="value">缓存数据</param>
-        /// <param name="absoluteExpiration">绝对过期时间</param>
+        /// <param name="key">cache data's key</param>
+        /// <param name="value">cache data</param>
+        /// <param name="absoluteExpiration">  </param>
         [DebuggerStepThrough]
         public static void Add<T>(string key, T value, DateTime absoluteExpiration)
         {
@@ -93,11 +81,11 @@ namespace FC.Framework
             _internalCache.Add(key, value, absoluteExpiration);
         }
         /// <summary>
-        /// 添加数据到缓存中
+        /// add data to cache
         /// </summary>
-        /// <param name="key">缓存数据key</param>
-        /// <param name="value">缓存数据</param>
-        /// <param name="absoluteExpiration">相对过期时间</param>
+        /// <param name="key">cache data's key</param>
+        /// <param name="value">cache data</param>
+        /// <param name="absoluteExpiration"> </param>
         [DebuggerStepThrough]
         public static void Add<T>(string key, T value, TimeSpan slidingExpiration)
         {
@@ -107,9 +95,9 @@ namespace FC.Framework
             _internalCache.Add(key, value, slidingExpiration);
         }
         /// <summary>
-        /// 移除指定key的缓存
+        /// remove cache data  
         /// </summary>
-        /// <param name="key"></param>
+        /// <param name="key">the cache data key</param>
         [DebuggerStepThrough]
         public static void Remove(string key)
         {

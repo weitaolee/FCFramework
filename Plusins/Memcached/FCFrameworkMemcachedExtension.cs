@@ -1,4 +1,6 @@
 ﻿
+using DFramework.Plusins.Memcached;
+
 namespace FC.Framework.Memcached
 {
     public static class DFrameworkMemcachedExtension

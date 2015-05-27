@@ -37,14 +37,7 @@ namespace FC.Framework
         /// <param name="key">缓存数据key</param>
         /// <param name="value">获取到的缓存数据</param>
         /// <returns>如果获取成功返回true,否则false</returns>
-        bool TryGet<T>(string key, out T value) ;
-
-        /// <summary>
-        /// 添加数据到缓存中
-        /// </summary>
-        /// <param name="key">缓存数据key</param>
-        /// <param name="value">缓存数据</param>
-        void Add<T>(string key, T value);
+        bool TryGet<T>(string key, out T value);
         /// <summary>
         /// 添加数据到缓存中
         /// </summary>
