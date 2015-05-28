@@ -27,7 +27,7 @@ namespace FC.Framework
             return Instance;
         }
 
-        public void Start()
+        public void UseDefaultJsonSerializer()
         {
             IoC.Register<IJsonSerializer, JsonSerializer>(LifeStyle.Singleton);
         }
