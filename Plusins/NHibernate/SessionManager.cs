@@ -42,6 +42,23 @@ namespace FC.Framework.NHibernate
             SessionFactory = config.BuildSessionFactory();
         }
 
+        public static void Initalize(string connectString, ModelMapper mapper, string configFile = "hibernate.config")
+        {
+            Check.Argument.IsNotEmpty(connectString, "connectString");
+            Check.Argument.IsNotNull(mapper, "mapper");
+
+            config = new Configuration().Configure(configFile);
+
+            config.DataBaseIntegration(db =>
+            {
+                db.ConnectionString = connectString;
+            });
+
+            config.AddMapping(mapper.CompileMappingForAllExplicitlyAddedEntities());
+
+            SessionFactory = config.BuildSessionFactory();
+        }
+
         public static ISession OpenSession()
         {
             return SessionFactory.OpenSession();

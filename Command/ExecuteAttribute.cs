@@ -20,15 +20,5 @@ namespace FC.Framework
     {
         public ExecuteSyncAttribute() { }
 
-    }
-
-    /// <summary>
-    /// Command Execute Attribute,if use this attr, the command will executed distribute 
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    public class ExecuteDistributedAttribute : Attribute
-    {
-        public ExecuteDistributedAttribute() { }
-
-    }
+    } 
 }
