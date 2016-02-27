@@ -65,5 +65,33 @@ namespace FC.Framework.NHibernate
 
             return framework;
         }
+
+        /// <summary>
+        /// Use NHibernate
+        /// </summary>
+        /// <param name="framework"></param>
+        /// <param name="connString">连接字符</param>
+        /// <param name="mapperBuildAction">NHibernate Mapper Assemblies</param>
+        /// <param name="nhibernateConfigFileName">NHibernate config file<remarks>default:hibernate.config</remarks></param>
+        /// <returns></returns>
+        public static FCFramework UseNHibernate(this FCFramework framework,
+                                                ConnectionString connString,
+                                               ModelMapper mapper,
+                                                string nhibernateConfigFileName = "hibernate.config")
+        {
+            Check.Argument.IsNotNull(mapper, "mapperBuildAction");
+            Check.Argument.IsNotNull(connString, "connString");
+
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, nhibernateConfigFileName);
+
+            IoC.Register<IUnitOfWork, UnitOfWork>();
+            IoC.Register<IRepository, Repository>();
+            IoC.Register<ConnectionString>(connString);
+            IoC.Register<IDatabaseFactory, DatabaseFactory>(LifeStyle.Singleton);
+
+            SessionManager.Initalize(connString.Value, mapper, filePath);
+
+            return framework;
+        }
     }
 }
