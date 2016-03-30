@@ -4,9 +4,6 @@ namespace FC.Framework
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Diagnostics;
     using FC.Framework.Utilities;
     public class IoC
     {

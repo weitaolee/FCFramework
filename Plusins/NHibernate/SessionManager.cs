@@ -1,15 +1,10 @@
-﻿using FC.Framework;
-using FC.Framework.Repository;
-using NHibernate;
+﻿using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Mapping.ByCode;
 using NHibernate.Tool.hbm2ddl;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using FC.Framework.Utilities;
 
 namespace FC.Framework.NHibernate
@@ -18,11 +13,13 @@ namespace FC.Framework.NHibernate
     {
         public static ISessionFactory SessionFactory { get; private set; }
         private static Configuration config;
+        private static IInterceptor _interceptor;
 
-        public static void Initalize(string connectString, IEnumerable<Assembly> mapperAssemblies, string configFile = "hibernate.config")
+        public static void Initalize(string connectString, IEnumerable<Assembly> mapperAssemblies, IInterceptor interceptor = null, string configFile = "hibernate.config")
         {
             Check.Argument.IsNotEmpty(connectString, "connectString");
 
+            _interceptor = interceptor;
             config = new Configuration().Configure(configFile);
 
             config.DataBaseIntegration(db =>
@@ -41,12 +38,12 @@ namespace FC.Framework.NHibernate
 
             SessionFactory = config.BuildSessionFactory();
         }
-
-        public static void Initalize(string connectString, ModelMapper mapper, string configFile = "hibernate.config")
+        public static void Initalize(string connectString, ModelMapper mapper, IInterceptor interceptor = null, string configFile = "hibernate.config")
         {
             Check.Argument.IsNotEmpty(connectString, "connectString");
             Check.Argument.IsNotNull(mapper, "mapper");
 
+            _interceptor = interceptor;
             config = new Configuration().Configure(configFile);
 
             config.DataBaseIntegration(db =>
@@ -61,7 +58,10 @@ namespace FC.Framework.NHibernate
 
         public static ISession OpenSession()
         {
-            return SessionFactory.OpenSession();
+            if (_interceptor != null)
+                return SessionFactory.OpenSession(_interceptor);
+            else
+                return SessionFactory.OpenSession();
         }
 
         public static void CreateTables()

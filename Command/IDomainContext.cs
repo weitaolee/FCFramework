@@ -1,9 +1,5 @@
 ﻿using FC.Framework.Domain;
 using FC.Framework.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace FC.Framework
 {

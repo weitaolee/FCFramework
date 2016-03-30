@@ -106,7 +106,6 @@
     <Compile Include="Utilities\DeepCloneHelper.cs" />
     <Compile Include="Infrastructure\Caching\Cache.cs" />
     <Compile Include="Command\CommandExecutionExecption.cs" />
-    <Compile Include="Infrastructure\Configuration\ConfigurationManagerWrapper.cs" />
     <Compile Include="Utilities\CheckHelper.cs" />
     <Compile Include="DisposableResource.cs" />
     <Compile Include="Extensions\CollectionExtension.cs" />

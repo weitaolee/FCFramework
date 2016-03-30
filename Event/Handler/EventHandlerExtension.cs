@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using FC.Framework.Utilities;
-
-namespace FC.Framework
+﻿namespace FC.Framework
 {
     public static class EventHandlerExtension
     {

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 
 namespace FC.Framework
 {
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Linq.Expressions;
-    using System.Reflection;
 
     public static class EnumerableExtension
     {

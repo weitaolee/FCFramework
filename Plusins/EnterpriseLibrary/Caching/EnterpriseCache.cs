@@ -1,8 +1,6 @@
 ﻿namespace FC.Framework.EnterpriseLibrary
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Diagnostics;
     using FC.Framework.Utilities;
     using Microsoft.Practices.EnterpriseLibrary.Caching;

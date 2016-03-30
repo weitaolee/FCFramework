@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using FC.Framework.Utilities;
 using FC.Framework.Domain;
 using System.Threading.Tasks;

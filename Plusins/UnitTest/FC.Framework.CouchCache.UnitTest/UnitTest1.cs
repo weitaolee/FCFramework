@@ -1,6 +1,5 @@
 ﻿using System;
 using Xunit;
-using FC.Framework;
 using FC.Framework.CouchbaseCache;
 using FC.Framework.Autofac;
 using System.Collections.Generic;

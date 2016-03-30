@@ -1,8 +1,6 @@
 ﻿namespace FC.Framework
 {
     using System;
-    using System.Diagnostics;
-    using FC.Framework.Utilities;
 
     /// <summary>
     /// 执行策略Attribute

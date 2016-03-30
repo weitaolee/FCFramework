@@ -1,6 +1,4 @@
 ﻿
-using System;
-
 namespace FC.Framework.Domain
 {
     public interface IAggregateRoot : IEntity

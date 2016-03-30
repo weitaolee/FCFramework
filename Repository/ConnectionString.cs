@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FC.Framework.Domain;
-using FC.Framework.Utilities;
+﻿using FC.Framework.Utilities;
 
 
 namespace FC.Framework.Repository

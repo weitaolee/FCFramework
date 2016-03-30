@@ -1,5 +1,4 @@
 ﻿using System;
-using FC.Framework;
 using FC.Framework.Utilities;
 namespace FC.Framework.Domain
 {

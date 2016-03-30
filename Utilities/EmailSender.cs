@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Net.Mail;
-using System.IO;
-using FC.Framework;
 using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace FC.Framework.Utilities
@@ -66,7 +63,7 @@ namespace FC.Framework.Utilities
             Task.Factory.StartNew(() => SendMail(toAddress, subject, body))
                         .ContinueWith(t =>
                         {
-                            Log.Error("   email to {0} failed，title {1}-the email content is '{2}'.", toAddress, subject, body);
+                            Log.Error("email to {0} failed，title {1}-the email content is '{2}'.", toAddress, subject, body);
                         }, TaskContinuationOptions.OnlyOnFaulted);
         }
 

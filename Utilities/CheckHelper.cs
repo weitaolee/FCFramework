@@ -256,6 +256,17 @@ namespace FC.Framework.Utilities
                     throw new ArgumentException("\"{0}\" 不是合法的URL.".FormatWith(argumentName), argumentName);
                 }
             }
+
+            [DebuggerStepThrough]
+            public static void ValidSqlParameter(string argument, string argumentName)
+            {
+                var chars = new char[] { ',', '\'', '`', '@', ';', '-', '+', '\\' };
+
+                if (!argument.All(c => !chars.Contains(c)))
+                {
+
+                }
+            }
         }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using FC.Framework;
-using FC.Framework.Repository;
 
 namespace FC.Framework.EntityFramework
 {

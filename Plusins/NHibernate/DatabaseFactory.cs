@@ -1,6 +1,4 @@
 ﻿using System;
-using FC.Framework;
-using System.Collections.Generic;
 using NHibernate;
 
 namespace FC.Framework.NHibernate

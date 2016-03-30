@@ -4,6 +4,7 @@ using System.Reflection;
 using FC.Framework.Repository;
 using FC.Framework.Utilities;
 using System.IO;
+using NHibernate;
 using NHibernate.Mapping.ByCode;
 
 namespace FC.Framework.NHibernate
@@ -16,11 +17,13 @@ namespace FC.Framework.NHibernate
         /// <param name="framework"></param>
         /// <param name="connString">连接字符</param>
         /// <param name="mapperAssemblies">NHibernate Mapper Assemblies</param>
+        /// <param name="interceptor"></param>
         /// <param name="nhibernateConfigFileName">NHibernate config file<remarks>default:hibernate.config</remarks></param>
         /// <returns></returns>
         public static FCFramework UseNHibernate(this FCFramework framework,
                                                 ConnectionString connString,
                                                 IEnumerable<Assembly> mapperAssemblies,
+                                                IInterceptor interceptor = null,
                                                 string nhibernateConfigFileName = "hibernate.config")
         {
             Check.Argument.IsNotEmpty(mapperAssemblies, "mapperAssemblies");
@@ -33,7 +36,7 @@ namespace FC.Framework.NHibernate
             IoC.Register<ConnectionString>(connString);
             IoC.Register<IDatabaseFactory, DatabaseFactory>(LifeStyle.Singleton);
 
-            SessionManager.Initalize(connString.Value, mapperAssemblies, filePath);
+            SessionManager.Initalize(connString.Value, mapperAssemblies, interceptor,filePath);
 
             return framework;
         }
@@ -44,11 +47,13 @@ namespace FC.Framework.NHibernate
         /// <param name="framework"></param>
         /// <param name="connString">连接字符</param>
         /// <param name="mapperBuildAction">NHibernate Mapper Assemblies</param>
+        /// <param name="interceptor"></param>
         /// <param name="nhibernateConfigFileName">NHibernate config file<remarks>default:hibernate.config</remarks></param>
         /// <returns></returns>
         public static FCFramework UseNHibernate(this FCFramework framework,
                                                 ConnectionString connString,
-                                               Func<ModelMapper> mapperBuildAction,
+                                                Func<ModelMapper> mapperBuildAction,
+                                                IInterceptor interceptor = null,
                                                 string nhibernateConfigFileName = "hibernate.config")
         {
             Check.Argument.IsNotNull(mapperBuildAction, "mapperBuildAction");
@@ -61,7 +66,7 @@ namespace FC.Framework.NHibernate
             IoC.Register<ConnectionString>(connString);
             IoC.Register<IDatabaseFactory, DatabaseFactory>(LifeStyle.Singleton);
 
-            SessionManager.Initalize(connString.Value, mapperBuildAction(), filePath);
+            SessionManager.Initalize(connString.Value, mapperBuildAction(), interceptor, filePath);
 
             return framework;
         }
@@ -71,12 +76,14 @@ namespace FC.Framework.NHibernate
         /// </summary>
         /// <param name="framework"></param>
         /// <param name="connString">连接字符</param>
-        /// <param name="mapperBuildAction">NHibernate Mapper Assemblies</param>
+        /// <param name="mapper">NHibernate Mapper Assemblies</param>
+        /// <param name="interceptor"></param>
         /// <param name="nhibernateConfigFileName">NHibernate config file<remarks>default:hibernate.config</remarks></param>
         /// <returns></returns>
         public static FCFramework UseNHibernate(this FCFramework framework,
                                                 ConnectionString connString,
-                                               ModelMapper mapper,
+                                                ModelMapper mapper,
+                                                IInterceptor interceptor = null,
                                                 string nhibernateConfigFileName = "hibernate.config")
         {
             Check.Argument.IsNotNull(mapper, "mapperBuildAction");
@@ -89,7 +96,7 @@ namespace FC.Framework.NHibernate
             IoC.Register<ConnectionString>(connString);
             IoC.Register<IDatabaseFactory, DatabaseFactory>(LifeStyle.Singleton);
 
-            SessionManager.Initalize(connString.Value, mapper, filePath);
+            SessionManager.Initalize(connString.Value, mapper, interceptor, filePath);
 
             return framework;
         }

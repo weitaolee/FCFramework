@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using FC.Framework.Utilities;
-using FC.Framework.Repository;
 
 namespace FC.Framework
 {

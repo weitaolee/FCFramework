@@ -1,8 +1,6 @@
 ﻿namespace FC.Framework.Utilities
 {
     using System;
-    using System.Diagnostics;
-    using System.Runtime.CompilerServices;
     using System.Text;
     using System.Net;
     using System.IO;

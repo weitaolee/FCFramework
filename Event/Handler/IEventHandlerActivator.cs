@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using FC.Framework.DynamicReflection;
-using System.Diagnostics;
+
 namespace FC.Framework
 {
     public interface IEventHandlerActivator

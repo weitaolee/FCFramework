@@ -1,10 +1,7 @@
 ﻿using System;
 using Xunit;
-using FC.Framework;
 using System.Collections.Generic;
-using System.Linq;
 using FC.Framework.Utilities;
-using System.Text;
 
 namespace FC.Framework.CouchCache.UnitTest
 {

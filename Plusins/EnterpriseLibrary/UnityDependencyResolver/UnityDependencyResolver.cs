@@ -7,7 +7,6 @@ namespace FC.Framework.EnterpriseLibrary
     using Microsoft.Practices.Unity;
     using Microsoft.Practices.Unity.Configuration;
     using System.Diagnostics;
-    using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
     using System.Configuration;
     using System.IO;
     using System.Collections.ObjectModel;

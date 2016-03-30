@@ -1,5 +1,4 @@
-﻿using System;
-namespace FC.Framework.Domain
+﻿namespace FC.Framework.Domain
 {
     public interface IEntity { }
 }

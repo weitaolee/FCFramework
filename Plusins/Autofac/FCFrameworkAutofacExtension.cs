@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FC.Framework.Autofac
+﻿namespace FC.Framework.Autofac
 {
     public static class FCFrameworkAutofacExtension
     { /// <summary>
