@@ -257,14 +257,15 @@ namespace FC.Framework.Utilities
                 }
             }
 
+            //SQL大多应参数化，此方法仅用于部分不能参数化的参数检查
             [DebuggerStepThrough]
             public static void ValidSqlParameter(string argument, string argumentName)
             {
                 var chars = new char[] { ',', '\'', '`', '@', ';', '-', '+', '\\' };
 
-                if (!argument.All(c => !chars.Contains(c)))
+                if (!string.IsNullOrWhiteSpace(argument) && argument.Any(c => chars.Contains(c)))
                 {
-
+                    throw new ArgumentException("\"{0}\" 参数中有非法字符".FormatWith(argumentName), argumentName);
                 }
             }
         }

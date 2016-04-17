@@ -80,7 +80,5 @@ namespace FC.Framework
                 throw ex;
             }
         }
-
-
     }
 }

@@ -45,5 +45,55 @@ namespace FC.Framework
 
             return dtDateTime;
         }
+
+        /// <summary>
+        /// get the first day of month
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static DateTime FirstDayOfMonth(this DateTime target)
+        {
+            var firstDayOfMonth = new DateTime(target.Year, target.Month, 1);
+
+            return firstDayOfMonth;
+        }
+
+        /// <summary>
+        /// get the last day of month
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static DateTime LastDayOfMonth(this DateTime target)
+        {
+            var firstDayOfMonth = new DateTime(target.Year, target.Month, 1);
+            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddMilliseconds(-3);
+
+            return lastDayOfMonth;
+        }
+
+        /// <summary>
+        /// is the first day of month
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static bool IsFirstDayOfMonth(this DateTime target)
+        {
+            var firstDayOfMonth = new DateTime(target.Year, target.Month, 1);
+
+            return firstDayOfMonth== target.Date;
+        }
+
+        /// <summary>
+        /// is the last day of month
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static bool IsLastDayOfMonth(this DateTime target)
+        {
+            var firstDayOfMonth = new DateTime(target.Year, target.Month, 1);
+            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddMilliseconds(-3);
+
+            return lastDayOfMonth == target.Date;
+        }
     }
 }
