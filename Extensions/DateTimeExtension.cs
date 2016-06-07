@@ -23,6 +23,16 @@ namespace FC.Framework
         }
 
         /// <summary>
+        /// convert datetime to unix timestamp
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static long ToLongUnixTimestamp(this DateTime target)
+        {
+            return (int)((target.ToUniversalTime().Ticks - 621355968000000000) / 10000);
+        }
+
+        /// <summary>
         /// convert unix timestamp to local datetime
         /// </summary>
         /// <param name="target"></param>
@@ -35,6 +45,18 @@ namespace FC.Framework
         }
 
         /// <summary>
+        /// convert long unix timestamp to local datetime
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static DateTime ToLocalDateTime(this long target)
+        {
+            DateTime dtDateTime = new DateTime(621355968000000000 + (long)target * (long)10000, DateTimeKind.Utc);
+
+            return dtDateTime.ToLocalTime();
+        }
+
+        /// <summary>
         /// convert unix timestamp to local datetime
         /// </summary>
         /// <param name="target"></param>
@@ -42,6 +64,19 @@ namespace FC.Framework
         public static DateTime ToUtcDateTime(this int target)
         {
             DateTime dtDateTime = new DateTime(621355968000000000 + (long)target * (long)10000000, DateTimeKind.Utc);
+
+            return dtDateTime;
+        }
+
+
+        /// <summary>
+        /// convert long unix timestamp to local datetime
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static DateTime ToUtcDateTime(this long target)
+        {
+            DateTime dtDateTime = new DateTime(621355968000000000 + (long)target * (long)10000, DateTimeKind.Utc);
 
             return dtDateTime;
         }
@@ -80,7 +115,7 @@ namespace FC.Framework
         {
             var firstDayOfMonth = new DateTime(target.Year, target.Month, 1);
 
-            return firstDayOfMonth== target.Date;
+            return firstDayOfMonth == target.Date;
         }
 
         /// <summary>
@@ -94,6 +129,43 @@ namespace FC.Framework
             var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddMilliseconds(-3);
 
             return lastDayOfMonth == target.Date;
+        }
+
+        /// <summary>
+        /// get next friday
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static DateTime NextFriday(this DateTime target)
+        {
+            DateTime nextFriday;
+            while (true)
+            {
+                nextFriday = target.AddDays(1);
+                if (nextFriday.DayOfWeek == DayOfWeek.Friday)
+                    break;
+                else target = nextFriday;
+            }
+
+            return nextFriday.Date;
+        }
+        /// <summary>
+        /// get prev friday
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static DateTime PrevFriday(this DateTime target)
+        {
+            DateTime nextFriday;
+            while (true)
+            {
+                nextFriday = target.AddDays(-1);
+                if (nextFriday.DayOfWeek == DayOfWeek.Friday)
+                    break;
+                else target = nextFriday;
+            }
+
+            return nextFriday.Date;
         }
     }
 }
