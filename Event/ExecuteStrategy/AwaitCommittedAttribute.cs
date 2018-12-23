@@ -14,5 +14,14 @@
         }
 
         public EventDispatchStrategy Strategy { get; private set; }
+        public EventExecPriority Priority { get; set; }
+    }
+
+    public enum EventExecPriority
+    {
+        None=0,
+        Low = 1,
+        Common = 2,
+        High = 3
     }
 }

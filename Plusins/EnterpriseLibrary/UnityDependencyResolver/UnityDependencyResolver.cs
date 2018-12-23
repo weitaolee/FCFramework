@@ -11,6 +11,11 @@ namespace FC.Framework.EnterpriseLibrary
     using System.IO;
     using System.Collections.ObjectModel;
     using FC.Framework.Utilities;
+    using Unity.Resolution;
+    using Unity;
+    using Unity.Lifetime;
+    using Unity.Exceptions;
+
     /// <summary>
     /// 基于企业库的IoC实现
     /// </summary>

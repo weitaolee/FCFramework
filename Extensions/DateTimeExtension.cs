@@ -23,13 +23,13 @@ namespace FC.Framework
         }
 
         /// <summary>
-        /// convert datetime to unix timestamp
+        /// convert datetime to long unix timestamp
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
         public static long ToLongUnixTimestamp(this DateTime target)
         {
-            return (int)((target.ToUniversalTime().Ticks - 621355968000000000) / 10000);
+            return ((target.ToUniversalTime().Ticks - 621355968000000000) / 10000);
         }
 
         /// <summary>

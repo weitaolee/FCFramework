@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FC.Framework", "FC.Framework.csproj", "{68CFBBF1-AD19-423C-BBDD-84D937E88B8E}"
 EndProject
@@ -99,5 +99,9 @@ Global
 		{058AEF85-A0F4-4E47-BC02-41271B91D631} = {530773DE-B64A-48D5-8E3F-339150855D07}
 		{96DD9CFF-8D07-4615-BD01-E47198C967FC} = {3F232C00-9EC4-45AA-8959-761B1FF92380}
 		{CBDD7A21-29F7-4981-9A2A-E176218481A8} = {530773DE-B64A-48D5-8E3F-339150855D07}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
+		SolutionGuid = {741A0444-0855-472A-8A87-EA2DA3662DEE}
 	EndGlobalSection
 EndGlobal

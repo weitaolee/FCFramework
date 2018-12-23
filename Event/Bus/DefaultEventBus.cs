@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using FC.Framework.Utilities;
@@ -44,12 +45,11 @@ namespace FC.Framework
         {
             var handlerMethods = this._eventContariner.FindHandlerMethods<TEvent>(dispatchStrategy);
 
-            if (handlerMethods == null || handlerMethods.Count() == 0)
+            if (handlerMethods == null || !handlerMethods.Any())
             {
                 return;
                 //throw new EventHandlerExecption("no handler of event type(" + typeof(TEvent).Name + ").");
-            }
-
+            } 
             foreach (var method in handlerMethods)
             {
                 HandlerInvoke(method, @event);

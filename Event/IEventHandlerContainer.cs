@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace FC.Framework
 {
     public interface IEventHandlerContainer
     {
-        IEnumerable<MethodInfo> FindHandlerMethods<TEvent>()
+        IOrderedEnumerable<MethodInfo> FindHandlerMethods<TEvent>()
             where TEvent : IDomainEvent;
 
 
-        IEnumerable<MethodInfo> FindHandlerMethods<TEvent>(EventDispatchStrategy executionStrategy)
+        IOrderedEnumerable<MethodInfo> FindHandlerMethods<TEvent>(EventDispatchStrategy executionStrategy)
             where TEvent : IDomainEvent;
 
         void RegisterHandler(Type handlerType);

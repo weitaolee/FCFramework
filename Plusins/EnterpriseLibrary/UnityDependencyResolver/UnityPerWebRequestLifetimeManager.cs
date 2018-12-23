@@ -6,6 +6,8 @@
     using System.Web;
 
     using Microsoft.Practices.Unity;
+    using Unity.Attributes;
+    using Unity.Lifetime;
 
     public class UnityPerWebRequestLifetimeManager : LifetimeManager
     {
@@ -80,22 +82,32 @@
             }
         }
 
-        [DebuggerStepThrough]
-        public override object GetValue()
+        //[DebuggerStepThrough]
+        //public override object GetValue()
+        //{
+        //    return Value;
+        //}
+
+        //[DebuggerStepThrough]
+        //public override void SetValue(object newValue)
+        //{
+        //    Value = newValue;
+        //}
+
+        //[DebuggerStepThrough]
+        //public override void RemoveValue()
+        //{
+        //    Value = null;
+        //}
+
+        public override object GetValue(ILifetimeContainer container = null)
         {
             return Value;
         }
 
-        [DebuggerStepThrough]
-        public override void SetValue(object newValue)
+        protected override LifetimeManager OnCreateLifetimeManager()
         {
-            Value = newValue;
-        }
-
-        [DebuggerStepThrough]
-        public override void RemoveValue()
-        {
-            Value = null;
+            return null;
         }
     }
 }

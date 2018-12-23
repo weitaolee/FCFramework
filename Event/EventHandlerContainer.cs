@@ -12,17 +12,17 @@ namespace FC.Framework
         private readonly object _writeLock = new object();
         private Dictionary<Type, List<MethodInfo>> _handlerMethodsForEventType = new Dictionary<Type, List<MethodInfo>>();
 
-        public IEnumerable<MethodInfo> FindHandlerMethods<TEvent>()
+        public IOrderedEnumerable<MethodInfo> FindHandlerMethods<TEvent>()
             where TEvent : IDomainEvent
         {
             var handlers = default(List<MethodInfo>);
 
             this._handlerMethodsForEventType.TryGetValue(typeof(TEvent), out handlers);
 
-            return handlers;
+            return SortHanlder(handlers);
         }
 
-        public IEnumerable<MethodInfo> FindHandlerMethods<TEvent>(EventDispatchStrategy dispatchStrategy)
+        public IOrderedEnumerable<MethodInfo> FindHandlerMethods<TEvent>(EventDispatchStrategy dispatchStrategy)
             where TEvent : IDomainEvent
         {
             Check.Argument.IsNotNull(dispatchStrategy, "dispatchStrategy");
@@ -37,7 +37,24 @@ namespace FC.Framework
                     handlers = handlers.Where(h => TypeUtil.IsAttributeDefinedInMethodOrDeclaringClass(h, typeof(AwaitCommittedAttribute))).ToList();
             }
 
-            return handlers;
+            return SortHanlder(handlers);
+        }
+
+
+        private IOrderedEnumerable<MethodInfo> SortHanlder(IEnumerable<MethodInfo> handlerMethods)
+        {
+            if (handlerMethods == null) return null;
+            return handlerMethods.OrderByDescending(h =>
+             {
+                 var awaitAttr = (AwaitCommittedAttribute)h.GetCustomAttribute(typeof(AwaitCommittedAttribute));
+                 var priority = (int)EventExecPriority.Common;
+                 if (awaitAttr != null)
+                 {
+                     var pValue = (int)awaitAttr.Priority;
+                     if (pValue > 0) priority = pValue;
+                 }
+                 return priority;
+             });
         }
 
         public void RegisterHandler(Type handlerType)
