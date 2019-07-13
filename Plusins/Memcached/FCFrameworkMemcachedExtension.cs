@@ -1,8 +1,7 @@
 ﻿
-using System.Net;
-using DFramework.Plusins.Memcached;
+using System.Net; 
 
-namespace FC.Framework.Memcached
+namespace FC.Framework.Plusins.Memcached
 {
     public static class DFrameworkMemcachedExtension
     {

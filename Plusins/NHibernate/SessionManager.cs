@@ -15,7 +15,7 @@ namespace FC.Framework.NHibernate
         private static Configuration config;
         private static IInterceptor _interceptor;
 
-        public static void Initalize(string connectString, IEnumerable<Assembly> mapperAssemblies, IInterceptor interceptor = null, string configFile = "hibernate.config")
+        public static void Initalize(string connectString, IEnumerable<Assembly> mapperAssemblies, IInterceptor interceptor = null, INamingStrategy namingStrategy = null, string configFile = "hibernate.config")
         {
             Check.Argument.IsNotEmpty(connectString, "connectString");
 
@@ -26,6 +26,9 @@ namespace FC.Framework.NHibernate
             {
                 db.ConnectionString = connectString;
             });
+
+            if (namingStrategy != null)
+                config.SetNamingStrategy(namingStrategy);
 
             var mapper = new ModelMapper();
 
@@ -38,7 +41,7 @@ namespace FC.Framework.NHibernate
 
             SessionFactory = config.BuildSessionFactory();
         }
-        public static void Initalize(string connectString, ModelMapper mapper, IInterceptor interceptor = null, string configFile = "hibernate.config")
+        public static void Initalize(string connectString, ModelMapper mapper, IInterceptor interceptor = null, INamingStrategy namingStrategy = null, string configFile = "hibernate.config")
         {
             Check.Argument.IsNotEmpty(connectString, "connectString");
             Check.Argument.IsNotNull(mapper, "mapper");
@@ -46,6 +49,8 @@ namespace FC.Framework.NHibernate
             _interceptor = interceptor;
             config = new Configuration().Configure(configFile);
 
+            if (namingStrategy != null)
+                config.SetNamingStrategy(namingStrategy);
             config.DataBaseIntegration(db =>
             {
                 db.ConnectionString = connectString;

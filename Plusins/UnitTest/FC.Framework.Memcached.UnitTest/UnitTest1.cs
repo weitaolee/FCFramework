@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using FC.Framework.Autofac;
+using FC.Framework.Plusins.Memcached;
 
 namespace FC.Framework.Memcached.UnitTest
 {

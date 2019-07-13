@@ -7,10 +7,12 @@ namespace FC.Framework
     public static class Cache
     {
         private static ICache _internalCache;
-
+        private static System.Web.Caching.Cache _webCache;
         static Cache()
         {
-            _internalCache = IoC.Resolve<ICache>();
+            try { _internalCache = IoC.Resolve<ICache>(); }
+            catch { if (_internalCache == null) _webCache = new System.Web.Caching.Cache(); }
+
         }
 
         /// <summary>
@@ -23,7 +25,10 @@ namespace FC.Framework
         {
             Check.Argument.IsNotEmpty(key, "key");
 
-            return _internalCache.Get(key);
+            if (_internalCache != null)
+                return _internalCache.Get(key);
+            else
+                return _webCache.Get(key);
         }
         /// <summary>
         /// try get cache data
@@ -36,7 +41,22 @@ namespace FC.Framework
         {
             Check.Argument.IsNotEmpty(key, "key");
 
-            return _internalCache.TryGet(key, out value);
+            if (_internalCache != null)
+                return _internalCache.TryGet(key, out value);
+            else
+            {
+                try
+                {
+                    value = _webCache.Get(key);
+                    return true;
+                }
+                catch
+                {
+                    value = null;
+                    return false;
+                }
+            }
+
         }
         /// <summary>
         ///  get cache data
@@ -49,7 +69,19 @@ namespace FC.Framework
         {
             Check.Argument.IsNotEmpty(key, "key");
 
-            return _internalCache.Get<T>(key);
+            if (_internalCache != null)
+                return _internalCache.Get<T>(key);
+            else
+            {
+                try
+                {
+                    return (T)_webCache.Get(key);
+                }
+                catch
+                {
+                    return default(T);
+                }
+            }
         }
         /// <summary>
         /// try get cache data
@@ -63,7 +95,21 @@ namespace FC.Framework
         {
             Check.Argument.IsNotEmpty(key, "key");
 
-            return _internalCache.TryGet<T>(key, out value);
+            if (_internalCache != null)
+                return _internalCache.TryGet<T>(key, out value);
+            else
+            {
+                try
+                {
+                    value = (T)_webCache.Get(key);
+                    return true;
+                }
+                catch
+                {
+                    value = default(T);
+                    return false;
+                }
+            }
         }
 
         /// <summary>
@@ -78,7 +124,12 @@ namespace FC.Framework
             Check.Argument.IsNotEmpty(key, "key");
             Check.Argument.IsNotInPast(absoluteExpiration, "absoluteExpiration");
 
-            _internalCache.Add(key, value, absoluteExpiration);
+            if (_internalCache != null)
+                _internalCache.Add(key, value, absoluteExpiration);
+            else
+            {
+                _webCache.Add(key, value, null, absoluteExpiration, System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Default, null);
+            }
         }
         /// <summary>
         /// add data to cache
@@ -91,8 +142,12 @@ namespace FC.Framework
         {
             Check.Argument.IsNotEmpty(key, "key");
             Check.Argument.IsNotNegativeOrZero(slidingExpiration, "slidingExpiration");
-
-            _internalCache.Add(key, value, slidingExpiration);
+            if (_internalCache != null)
+                _internalCache.Add(key, value, slidingExpiration);
+            else
+            {
+                _webCache.Add(key, value, null, System.Web.Caching.Cache.NoAbsoluteExpiration, slidingExpiration, System.Web.Caching.CacheItemPriority.Default, null);
+            }
         }
         /// <summary>
         /// remove cache data  
@@ -102,8 +157,10 @@ namespace FC.Framework
         public static void Remove(string key)
         {
             Check.Argument.IsNotEmpty(key, "key");
-
-            _internalCache.Remove(key);
+            if (_internalCache != null)
+                _internalCache.Remove(key);
+            else
+                _webCache.Remove(key);
         }
     }
 }

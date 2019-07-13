@@ -7,7 +7,7 @@ using Enyim.Caching.Memcached;
 using FC.Framework;
 using FC.Framework.Utilities;
 
-namespace DFramework.Plusins.Memcached
+namespace FC.Framework.Plusins.Memcached
 {
     public class Memcache : ICache
     {
